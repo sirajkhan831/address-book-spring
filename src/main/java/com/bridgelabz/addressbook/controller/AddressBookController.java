@@ -23,19 +23,19 @@ public class AddressBookController {
     }
 
     @PostMapping(value = {"/add-entry"})
-    public ResponseEntity<String> addEmp(
+    public ResponseEntity<String> addEntry(
             @Valid @RequestBody AddressBookDto dto
     ) {
         return new ResponseEntity<>(service.addEntry(dto), HttpStatus.OK);
     }
 
     @GetMapping(value = {"get-all-entries"})
-    public ResponseEntity<List<AddressBookDto>> getAllEmployees() {
+    public ResponseEntity<List<AddressBookDto>> getEntries() {
         return new ResponseEntity<>(service.getEntries(), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteEmployee(
+    public ResponseEntity<String> deleteEntry(
             @PathVariable int id
     ) {
         return new ResponseEntity<>(service.deleteEntry(id), HttpStatus.OK);
