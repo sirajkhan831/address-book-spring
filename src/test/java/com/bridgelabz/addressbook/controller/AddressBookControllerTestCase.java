@@ -1,6 +1,5 @@
 package com.bridgelabz.addressbook.controller;
 
-import com.bridgelabz.addressbook.controller.AddressBookController;
 import com.bridgelabz.addressbook.dto.AddressBookDto;
 import com.bridgelabz.addressbook.service.AddressBookService;
 import org.junit.jupiter.api.Assertions;
