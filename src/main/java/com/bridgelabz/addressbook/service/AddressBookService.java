@@ -12,6 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Purpose: AddressBook Service for holding the business logic.
+ *
+ * @author Siraj
+ * @version 1.0
+ * @since 11-12-2021
+ **/
 @Service
 public class AddressBookService {
 
@@ -25,12 +32,22 @@ public class AddressBookService {
     @Autowired
     ModelMapper mapper;
 
+    /**
+     * Purpose : Adds new entry in the repository.
+     *
+     * @return : Returns a String if the object is added successfully.
+     */
     public String addEntry(AddressBookDto entryDto) {
         AddressBookEntity entryEntity = mapper.map(entryDto, AddressBookEntity.class);
         bookRepository.save(entryEntity);
         return ENT_ADDED_SUCCESSFULLY;
     }
 
+    /**
+     * Purpose : Fetches all the entry in the repository.
+     *
+     * @return : Returns a list of entries.
+     */
     public List<AddressBookDto> getEntries() {
         List<AddressBookDto> entries = new ArrayList<>();
         for (AddressBookEntity entity : bookRepository.findAll()) {
@@ -41,11 +58,21 @@ public class AddressBookService {
         return entries;
     }
 
+    /**
+     * Purpose : Deletes entry from the repository.
+     *
+     * @return : Returns a String is the object is deleted successfully.
+     */
     public String deleteEntry(int id) {
         bookRepository.deleteById(id);
         return ENT_DELETED_SUCCESSFULLY;
     }
 
+    /**
+     * Purpose : Updates new entry in the repository.
+     *
+     * @return : Returns a String if the object is updated successfully.
+     */
     public String updateEmployee(AddressBookDto addressEntry, int id) {
         if (bookRepository.findById(id).equals(Optional.empty())) {
             throw new ResourceException("No entry with the given id found");

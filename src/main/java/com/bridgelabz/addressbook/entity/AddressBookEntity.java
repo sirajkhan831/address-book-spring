@@ -7,6 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Purpose: AddressBook entity to represents a table in a database
+ *
+ * @author Siraj
+ * @version 1.0
+ * @since 11-12-2021
+ **/
 @Entity
 @Data
 @Table(name = "addressbook")

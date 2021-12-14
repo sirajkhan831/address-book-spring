@@ -40,6 +40,13 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(object, HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Purpose : Exception handler for resource not found exception.
+     *
+     * @param exception the exception
+     * @param request   the current request
+     * @return a {@code ResponseEntity} instance
+     */
     @ExceptionHandler(ResourceException.class)
     public ResponseEntity<Object> handleResourceNotFoundException(ResourceException exception, WebRequest request) {
         object.setTimestamp(new Date());
@@ -49,6 +56,12 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(object, HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Purpose : Exception handler for empty result access exception.
+     *
+     * @param request the current request
+     * @return a {@code ResponseEntity} instance
+     */
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public ResponseEntity<Object> handleEmptyDataException(WebRequest request) {
         object.setTimestamp(new Date());

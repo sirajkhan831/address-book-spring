@@ -4,6 +4,13 @@ import lombok.Data;
 
 import javax.validation.constraints.Pattern;
 
+/**
+ * Purpose: AddressBook DTO to carry data between processes.
+ *
+ * @author Siraj
+ * @version 1.0
+ * @since 05-12-2021
+ **/
 @Data
 public class AddressBookDto {
 
