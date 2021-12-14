@@ -2,6 +2,7 @@ package com.bridgelabz.addressbook.service;
 
 import com.bridgelabz.addressbook.dto.AddressBookDto;
 import com.bridgelabz.addressbook.entity.AddressBookEntity;
+import com.bridgelabz.addressbook.exceptionhandler.ResourceException;
 import com.bridgelabz.addressbook.repository.AddressBookRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AddressBookService {
@@ -23,7 +25,7 @@ public class AddressBookService {
     @Autowired
     ModelMapper mapper;
 
-    public String addEmp(AddressBookDto entryDto) {
+    public String addEntry(AddressBookDto entryDto) {
         AddressBookEntity entryEntity = mapper.map(entryDto, AddressBookEntity.class);
         bookRepository.save(entryEntity);
         return ENT_ADDED_SUCCESSFULLY;
@@ -44,19 +46,13 @@ public class AddressBookService {
         return ENT_DELETED_SUCCESSFULLY;
     }
 
-    public String updateEmployee(AddressBookDto addressEntry) {
+    public String updateEmployee(AddressBookDto addressEntry, int id) {
+        if (bookRepository.findById(id).equals(Optional.empty())) {
+            throw new ResourceException("No entry with the given id found");
+        }
         AddressBookEntity addressEntity = mapper.map(addressEntry, AddressBookEntity.class);
-        addressEntity.setId(dtoToEntity(addressEntry).getId());
+        addressEntity.setId(id);
         bookRepository.save(addressEntity);
         return ENT_UPDATED_SUCCESSFULLY;
-    }
-
-    public AddressBookEntity dtoToEntity(AddressBookDto dto) {
-        for (AddressBookEntity emp : bookRepository.findAll()) {
-            if (emp.getName().equals(dto.getName())) {
-                return emp;
-            }
-        }
-        return null;
     }
 }
