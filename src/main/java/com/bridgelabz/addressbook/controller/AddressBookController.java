@@ -18,7 +18,7 @@ import java.util.List;
  * @since 11-12-2021
  **/
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/addressbook/api")
 public class AddressBookController {
 
     /**
@@ -60,18 +60,6 @@ public class AddressBookController {
     }
 
     /**
-     * Purpose : Method to delete new entry in the repository via DELETE.
-     *
-     * @return : Returns Response if the entry is successfully deleted
-     */
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteEntry(
-            @PathVariable int id
-    ) {
-        return new ResponseEntity<>(service.deleteEntry(id), HttpStatus.OK);
-    }
-
-    /**
      * Purpose : Method to update entry in the repository via PUT.
      *
      * @return : Returns Response if the entry is successfully updated
@@ -82,5 +70,17 @@ public class AddressBookController {
             @Valid @RequestBody AddressBookDto dto
     ) {
         return new ResponseEntity<>(service.updateEmployee(dto, id), HttpStatus.OK);
+    }
+
+    /**
+     * Purpose : Method to delete new entry in the repository via DELETE.
+     *
+     * @return : Returns Response if the entry is successfully deleted
+     */
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteEntry(
+            @PathVariable int id
+    ) {
+        return new ResponseEntity<>(service.deleteEntry(id), HttpStatus.OK);
     }
 }

@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(AddressBookDto.class)
-public class IntegrationTestCase {
+public class AddressBookIntegrationTestCase {
 
     @Autowired
     private MockMvc mvc;

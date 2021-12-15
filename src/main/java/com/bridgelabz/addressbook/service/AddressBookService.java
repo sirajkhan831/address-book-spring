@@ -33,17 +33,6 @@ public class AddressBookService {
     ModelMapper mapper;
 
     /**
-     * Purpose : Adds new entry in the repository.
-     *
-     * @return : Returns a String if the object is added successfully.
-     */
-    public String addEntry(AddressBookDto entryDto) {
-        AddressBookEntity entryEntity = mapper.map(entryDto, AddressBookEntity.class);
-        bookRepository.save(entryEntity);
-        return ENT_ADDED_SUCCESSFULLY;
-    }
-
-    /**
      * Purpose : Fetches all the entry in the repository.
      *
      * @return : Returns a list of entries.
@@ -52,7 +41,6 @@ public class AddressBookService {
         List<AddressBookDto> entries = new ArrayList<>();
         for (AddressBookEntity entity : bookRepository.findAll()) {
             AddressBookDto dto = mapper.map(entity, AddressBookDto.class);
-            dto.setId(entity.getId());
             entries.add(dto);
         }
         return entries;
@@ -64,8 +52,23 @@ public class AddressBookService {
      * @return : Returns a String is the object is deleted successfully.
      */
     public String deleteEntry(int id) {
+        if (bookRepository.findById(id).equals(Optional.empty())) {
+            throw new ResourceException();
+        }
         bookRepository.deleteById(id);
         return ENT_DELETED_SUCCESSFULLY;
+    }
+
+    /**
+     * Purpose : Adds new entry in the repository.
+     *
+     * @return : Returns a String if the object is added successfully.
+     */
+    public String addEntry(AddressBookDto entryDto) {
+        entryDto.setId(idGenerator());
+        AddressBookEntity entryEntity = mapper.map(entryDto, AddressBookEntity.class);
+        bookRepository.save(entryEntity);
+        return ENT_ADDED_SUCCESSFULLY;
     }
 
     /**
@@ -75,11 +78,22 @@ public class AddressBookService {
      */
     public String updateEmployee(AddressBookDto addressEntry, int id) {
         if (bookRepository.findById(id).equals(Optional.empty())) {
-            throw new ResourceException("No entry with the given id found");
+            throw new ResourceException();
         }
         AddressBookEntity addressEntity = mapper.map(addressEntry, AddressBookEntity.class);
         addressEntity.setId(id);
         bookRepository.save(addressEntity);
         return ENT_UPDATED_SUCCESSFULLY;
+    }
+
+    private int idGenerator() {
+        int id = 0;
+        for (AddressBookEntity entity : bookRepository.findAll()) {
+            id++;
+            if (id != entity.getId()) {
+                return id;
+            }
+        }
+        return getEntries().size() + 1;
     }
 }

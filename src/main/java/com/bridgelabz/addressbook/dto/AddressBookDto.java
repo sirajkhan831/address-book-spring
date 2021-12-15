@@ -2,6 +2,7 @@ package com.bridgelabz.addressbook.dto;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 /**
@@ -16,6 +17,7 @@ public class AddressBookDto {
 
     private int id;
 
+    @NotNull
     @Pattern(regexp = "[A-Za-z ]{3,32}", message = "Name should not contain any number and must be at least 3 characters in length.")
     private String name;
 
